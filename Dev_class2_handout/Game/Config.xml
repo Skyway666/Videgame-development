@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Config for the game-->
+
+<configurationop>
+  
+  <string_size>
+    <short_str> 32</short_str>
+    <mid_str>255 </mid_str>
+    <huge_str>8192</huge_str>
+  </string_size>
+  
+  <Audio>
+  </Audio>
+  
+  <Input>
+  </Input>
+  
+  <Renderer>
+  </Renderer>
+  
+  <Textures>
+  </Textures>
+  
+  <Window>
+    <Window_name> Street fighter -1, coder edition</Window_name>
+    <Fullscreen>0</Fullscreen>
+    <Borderless>0</Borderless>
+    <Resizable>1</Resizable>
+    <Fullscreen_window>0</Fullscreen_window>
+    <Title>replacement title</Title>
+    <Width>1024</Width>
+    <Height>768</Height>
+    <Scale>1</Scale>
+  </Window>
+  
+</configurationop>
+
