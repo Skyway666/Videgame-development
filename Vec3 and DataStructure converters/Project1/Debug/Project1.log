@@ -1,0 +1,15 @@
+﻿  Main.cpp
+c:\users\gaming\documents\visual studio 2015\projects\project1\project1\list.h(313): warning C4018: '<': no coinciden signed/unsigned
+  c:\users\gaming\documents\visual studio 2015\projects\project1\project1\list.h(309): note: durante la compilación de la función miembro de plantilla clase de 'DynArray<T> List<T>::dyn_array_converter(void) const'
+          with
+          [
+              T=int
+          ]
+  c:\users\gaming\documents\visual studio 2015\projects\project1\project1\main.cpp(73): note: vea la referencia a la creación de instancias de plantilla de función 'DynArray<T> List<T>::dyn_array_converter(void) const' que se está compilando
+          with
+          [
+              T=int
+          ]
+  c:\users\gaming\documents\visual studio 2015\projects\project1\project1\main.cpp(63): note: vea la referencia a la creación de instancias de plantilla clase de 'List<int>' que se está compilando
+  Project1.vcxproj -> C:\Users\Gaming\Documents\Visual Studio 2015\Projects\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\Gaming\Documents\Visual Studio 2015\Projects\Project1\Debug\Project1.pdb (Partial PDB)
