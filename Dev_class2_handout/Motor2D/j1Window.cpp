@@ -38,26 +38,26 @@ bool j1Window::Awake(pugi::xml_node node)
 		//Create window
 		Uint32 flags = SDL_WINDOW_SHOWN;
 
-		width =  node.first_child().child("Window").child("Width").first_attribute().as_int(); 
-		height = node.first_child().child("Window").child("Height").first_attribute().as_int();
-		scale = node.first_child().child("Window").child("Scale").first_attribute().as_int();
+		width = node.first_child().child("Window").child("Width").text().as_int();
+		height = node.first_child().child("Window").child("Height").text().as_int();
+		scale = node.first_child().child("Window").child("Scale").text().as_int();
 
-		if(node.first_child().child("Window").attribute("Fullscreen").as_bool())
+		if(node.first_child().child("Window").child("Fullscreen").text().as_bool())
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if(node.first_child().child("Window").child("Borderless").first_attribute().as_bool())
+		if(node.first_child().child("Window").child("Borderless").text().as_bool())
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
 		}
 
-		if(node.first_child().child("Window").child("Resizable").first_attribute().as_bool())
+		if(node.first_child().child("Window").child("Resizable").text().as_bool())
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
 
-		if(node.first_child().child("Window").child("Fullscreen_window").first_attribute().as_bool())
+		if(node.first_child().child("Window").child("Fullscreen_window").text().as_bool())
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
@@ -76,7 +76,7 @@ bool j1Window::Awake(pugi::xml_node node)
 
 				// TODO 4: Read the title of the app from the XML
 			// and set directly the window title using SetTitle()
-	        SetTitle(node.first_child().child("Window").first_child().child_value());
+	        SetTitle(node.first_child().child("Window").child("Window_name").child_value());
 
 		}
 	}

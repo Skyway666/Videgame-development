@@ -11,6 +11,8 @@
   </string_size>
   
   <Audio>
+    <music>1</music>
+    <fx_volume>50</fx_volume>
   </Audio>
   
   <Input>
