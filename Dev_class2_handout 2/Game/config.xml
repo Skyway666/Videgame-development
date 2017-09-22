@@ -5,7 +5,11 @@
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
   </app>
-	
+
+  <audio>
+    <volume volume="128"/>
+  </audio>
+  
   <renderer>
     <vsync value="false"/>
   </renderer>
