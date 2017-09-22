@@ -48,9 +48,9 @@ public:
 	// that can be called anytime, even if they 
 	// will one execute by the very end of the frame
 	// Load / Save
-	void Load(pugi::xml_node node) const;
+	void Load() const;
 
-	void Save(pugi::xml_node node) const;
+	void Save() const;
 private:
 
 	// Load config file
@@ -77,8 +77,12 @@ private:
 	//Load
 	bool RealLoad() const;
 
+	pugi::xml_document save_file;
+	pugi::xml_node save_node;
+
 	mutable bool allaw_load = false;
 	mutable bool allaw_save = false;
+
 
 public:
 

@@ -231,3 +231,17 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 
 	return ret;
 }
+bool j1Render::Save(pugi::xml_node node) const
+{
+	node.child("camera").attribute("x").set_value(camera.x);
+	node.child("camera").attribute("y").set_value(camera.y);
+
+	return true;
+}
+bool j1Render::Load(pugi::xml_node node)
+{
+	camera.x = node.child("camera").attribute("x").as_int();
+	camera.y = node.child("camera").attribute("y").as_int();
+
+	return true;
+}

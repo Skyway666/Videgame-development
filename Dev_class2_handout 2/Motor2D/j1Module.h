@@ -60,13 +60,13 @@ public:
 	}
 
 	//Save
-	virtual bool Save() const
+	virtual bool Save(pugi::xml_node node) const
 	{
 		return true;
 	}
 
 	//Load
-	virtual bool Load() const
+	virtual bool Load(pugi::xml_node node) 
 	{
 		return true;
 	}
