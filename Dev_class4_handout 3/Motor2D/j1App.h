@@ -11,7 +11,6 @@ class j1Input;
 class j1Render;
 class j1Textures;
 class j1Audio;
-class j1FileSystem;
 class j1Scene;
 class j1Map;
 
@@ -46,8 +45,8 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-	void LoadGame(const char* file);
-	void SaveGame(const char* file) const;
+	void LoadGame();
+	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
 private:
@@ -83,7 +82,6 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
-	j1FileSystem*		fs;
 	j1Map*				map;
 
 private:

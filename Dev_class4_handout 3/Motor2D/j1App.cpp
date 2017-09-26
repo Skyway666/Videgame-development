@@ -1,5 +1,4 @@
 #include <iostream> 
-#include <sstream> 
 
 #include "p2Defs.h"
 #include "p2Log.h"
@@ -10,7 +9,6 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Scene.h"
-#include "j1FileSystem.h"
 #include "j1Map.h"
 #include "j1App.h"
 
@@ -26,12 +24,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures();
 	audio = new j1Audio();
 	scene = new j1Scene();
-	fs = new j1FileSystem();
 	map = new j1Map();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
-	AddModule(fs);
 	AddModule(input);
 	AddModule(win);
 	AddModule(tex);
@@ -142,10 +138,7 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 {
 	pugi::xml_node ret;
 
-	char* buf;
-	int size = App->fs->Load("config.xml", &buf);
-	pugi::xml_parse_result result = config_file.load_buffer(buf, size);
-	RELEASE(buf);
+	pugi::xml_parse_result result = config_file.load_file("config.xml");
 
 	if(result == NULL)
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
@@ -279,22 +272,20 @@ const char* j1App::GetOrganization() const
 }
 
 // Load / Save
-void j1App::LoadGame(const char* file)
+void j1App::LoadGame()
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
 	want_to_load = true;
-	load_game.create("%s%s", fs->GetSaveDirectory(), file);
 }
 
 // ---------------------------------------
-void j1App::SaveGame(const char* file) const
+void j1App::SaveGame() const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
 
 	want_to_save = true;
-	save_game.create(file);
 }
 
 // ---------------------------------------
@@ -307,43 +298,34 @@ bool j1App::LoadGameNow()
 {
 	bool ret = false;
 
-	char* buffer;
-	uint size = fs->Load(load_game.GetString(), &buffer);
+	pugi::xml_document data;
+	pugi::xml_node root;
 
-	if(size > 0)
+	pugi::xml_parse_result result = data.load_file(load_game.GetString());
+
+	if(result != NULL)
 	{
-		pugi::xml_document data;
-		pugi::xml_node root;
+		LOG("Loading new Game State from %s...", load_game.GetString());
 
-		pugi::xml_parse_result result = data.load_buffer(buffer, size);
-		RELEASE(buffer);
+		root = data.child("game_state");
 
-		if(result != NULL)
+		p2List_item<j1Module*>* item = modules.start;
+		ret = true;
+
+		while(item != NULL && ret == true)
 		{
-			LOG("Loading new Game State from %s...", load_game.GetString());
-
-			root = data.child("game_state");
-
-			p2List_item<j1Module*>* item = modules.start;
-			ret = true;
-
-			while(item != NULL && ret == true)
-			{
-				ret = item->data->Load(root.child(item->data->name.GetString()));
-				item = item->next;
-			}
-
-			data.reset();
-			if(ret == true)
-				LOG("...finished loading");
-			else
-				LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+			ret = item->data->Load(root.child(item->data->name.GetString()));
+			item = item->next;
 		}
+
+		data.reset();
+		if(ret == true)
+			LOG("...finished loading");
 		else
-			LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
+			LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
 	}
 	else
-		LOG("Could not load game state xml file %s", load_game.GetString());
+		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
 
 	want_to_load = false;
 	return ret;
@@ -371,12 +353,8 @@ bool j1App::SavegameNow() const
 
 	if(ret == true)
 	{
-		std::stringstream stream;
-		data.save(stream);
-
-		// we are done, so write data to disk
-		fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
-		LOG("... finished saving", save_game.GetString());
+		data.save_file(save_game.GetString());
+		LOG("... finished saving", );
 	}
 	else
 		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");

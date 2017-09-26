@@ -2,7 +2,6 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
-#include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1Map.h"
 #include <math.h>
@@ -44,9 +43,7 @@ bool j1Map::CleanUp()
 
 	// TODO 2: Make sure you clean up any memory allocated
 	// from tilesets / map
-
-	// Remove all tilesets
-
+	delete[] tile_array;
 
 	map_file.reset();
 
@@ -59,11 +56,7 @@ bool j1Map::Load(const char* file_name)
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
-	char* buf;
-	int size = App->fs->Load(tmp.GetString(), &buf);
-	pugi::xml_parse_result result = map_file.load_buffer(buf, size);
-
-	RELEASE(buf);
+	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
 	if(result == NULL)
 	{
@@ -81,10 +74,14 @@ bool j1Map::Load(const char* file_name)
 	// remember to support more any number of tilesets!
 	
 
-	// TODO 5: LOG all the data loaded
-	// iterate all tilesets and LOG everything
+	if(ret == true)
+	{
+		// TODO 5: LOG all the data loaded
+		// iterate all tilesets and LOG everything
+	}
 
 	map_loaded = ret;
 
 	return ret;
 }
+

@@ -8,9 +8,41 @@
 
 // TODO 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
+// ----------------------------------------------------
 
 
+
+
+struct Map_node
+{
+	float map_version;
+	p2SString* orientation;
+	p2SString* renderorder;
+	uint width;
+	uint height;
+	uint tilewidth;
+	uint tileheight;
+	int nextobjectid;
+};
+
+struct Tileset
+{
+	uint firstid;
+	p2SString name;
+	uint tilewidth;
+	uint tileheight;
+	uint spacing;
+	uint margin;
+
+	struct image
+	{
+		p2SString source;
+		uint width;
+		uint height;
+	};
+};
 // TODO 1: Create a struct needed to hold the information to Map node
+
 
 // ----------------------------------------------------
 class j1Map : public j1Module
@@ -34,14 +66,19 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	void Fill_All_Map_Data();
+
 private:
+
 
 public:
 
-	// TODO 1: Add your struct for map info as public for now
+	Map_node map;
+    p2List<Tileset>* tile_array = new p2List<Tileset>;
+ 	// TODO 1: Add your struct for map info as public for now
 
 private:
-
+	
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;

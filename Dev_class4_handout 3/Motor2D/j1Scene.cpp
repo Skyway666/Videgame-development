@@ -44,10 +44,10 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame("save_game.xml");
+		App->LoadGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
+		App->SaveGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 1;
@@ -64,13 +64,14 @@ bool j1Scene::Update(float dt)
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
-	p2SString title("TODO 7");
-	
 	// TODO 7: Set the window title like
 	// "Map:%dx%d Tiles:%dx%d Tilesets:%d"
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+					0, 0,
+					0, 0,
+					0);
 
 	App->win->SetTitle(title.GetString());
-
 	return true;
 }
 
