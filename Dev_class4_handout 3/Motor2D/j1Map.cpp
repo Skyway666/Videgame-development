@@ -31,6 +31,14 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
+	//SDL_Texture* map_texture = App->tex->Load(tile_array->At(0)->data.image.source);
+
+	int counter = 0;
+	while(&App->tex->textures.At(counter)->data != nullptr) //This is not correct, as it would iterate all the textures of the game. We would have to implement a way to differentiate between tileset textures and other textures.
+	{ 
+	    App->render->Blit(App->tex->textures.At(counter)->data, 0, 0);
+		counter++;
+	}
 	// TODO 6: Iterate all tilesets and draw all their 
 	// images in 0,0 (you should have only one tileset for now)
 
@@ -138,6 +146,13 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
+	int counter = 0;
+	while (&tile_array->At(counter)->data != nullptr)
+	{
+		App->tex->textures.At(counter)->data = App->tex->Load(tile_array->At(counter)->data.image.source);
+		counter++;
+	}
+
 	map_loaded = ret;
 
 	return ret;
@@ -195,6 +210,7 @@ void j1Map::Fill_All_Map_Data(const pugi::xml_node& node)
 
 void j1Map::Fill_All_Tiles(const pugi::xml_node& node)
 {
+	int counter = 0; // counts number of tilesets
 	pugi::xml_node tileset = node.child("map").child("tileset");
 	while (tileset != nullptr)
 	{
@@ -209,11 +225,10 @@ void j1Map::Fill_All_Tiles(const pugi::xml_node& node)
 		tileset_data.image.width = tileset.child("image").attribute("width").as_int();
 		tileset_data.image.source = tileset.child("image").attribute("source").as_string();
 
-
 		tile_array->add(tileset_data);
-
-	
-
 		tileset = tileset.next_sibling("tileset");
+		counter++;
 	}
+
+	map.tilesets = counter;
 }

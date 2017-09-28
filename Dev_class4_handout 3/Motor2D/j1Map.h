@@ -44,6 +44,7 @@ struct Map_node
 	uint tilewidth;
 	uint tileheight;
 	int nextobjectid;
+	int tilesets;
 };
 
 struct Tileset
