@@ -10,14 +10,28 @@
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 // ----------------------------------------------------
 
+enum orientation
+{
+	orthogonal = 0,
+	isometric,
+	staggered,
+	hexagonal
+    
+};
 
-
+enum render_order
+{
+    right_down = 0,
+	right_up,
+	left_down,
+	left_up
+};
 
 struct Map_node
 {
 	float map_version;
-	p2SString* orientation;
-	p2SString* renderorder;
+	orientation orientation;
+	render_order renderorder;
 	uint width;
 	uint height;
 	uint tilewidth;
@@ -66,7 +80,7 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	void Fill_All_Map_Data();
+	void Fill_All_Map_Data(const pugi::xml_node& node);
 
 private:
 

@@ -68,6 +68,7 @@ bool j1Map::Load(const char* file_name)
 	{
 		// TODO 3: Create and call a private function to load and fill
 		// all your map data
+		Fill_All_Map_Data(map_file);
 	}
 
 	// TODO 4: Create and call a private function to load a tileset
@@ -85,3 +86,52 @@ bool j1Map::Load(const char* file_name)
 	return ret;
 }
 
+void j1Map::Fill_All_Map_Data(const pugi::xml_node& node)
+{
+	//Version
+	map.map_version = node.attribute("version").as_float();
+	//Orientation
+	if (node.attribute("orientation").as_string() == "orthogonal")
+	{
+		map.orientation = orthogonal;
+	}
+	if (node.attribute("orientation").as_string() == "isometric")
+	{
+		map.orientation = isometric;
+	}
+	if (node.attribute("orientation").as_string() == "staggered")
+	{
+		map.orientation = staggered;
+	}
+	if (node.attribute("orientation").as_string() == "hexagonal")
+	{
+		map.orientation = hexagonal;
+	}
+	//Render order
+	if (node.attribute("renderorder").as_string() == "right-down")
+	{
+		map.renderorder = right_down;
+	}
+	if (node.attribute("renderorder").as_string() == "right-up")
+	{
+		map.renderorder = right_up;
+	}
+	if (node.attribute("renderorder").as_string() == "left-up")
+	{
+		map.renderorder = left_up;
+	}
+	if (node.attribute("renderorder").as_string() == "left-dowm")
+	{
+		map.renderorder = left_down;
+	}
+	//Width
+	map.width = node.attribute("width").as_int();
+	//Height
+	map.height = node.attribute("height").as_int();
+	//Tile height
+	map.tileheight = node.attribute("tileheight").as_int();
+	//Tile width
+	map.tilewidth = node.attribute("tilewidth").as_int();
+	//Next object id
+	map.nextobjectid = node.attribute("nextobjectid").as_int();
+}
