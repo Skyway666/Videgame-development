@@ -27,6 +27,13 @@ enum render_order
 	left_up
 };
 
+struct image
+{
+	const char* source;
+	uint width;
+	uint height;
+};
+
 struct Map_node
 {
 	float map_version;
@@ -42,18 +49,14 @@ struct Map_node
 struct Tileset
 {
 	uint firstid;
-	p2SString name;
+	const pugi::char_t* name;
 	uint tilewidth;
 	uint tileheight;
 	uint spacing;
 	uint margin;
+	image image;
 
-	struct image
-	{
-		p2SString source;
-		uint width;
-		uint height;
-	};
+	
 };
 // TODO 1: Create a struct needed to hold the information to Map node
 
@@ -81,6 +84,8 @@ public:
 	bool Load(const char* path);
 
 	void Fill_All_Map_Data(const pugi::xml_node& node);
+
+	void Fill_All_Tiles(const pugi::xml_node& node);
 
 private:
 

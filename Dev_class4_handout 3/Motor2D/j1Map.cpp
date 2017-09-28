@@ -69,6 +69,7 @@ bool j1Map::Load(const char* file_name)
 		// TODO 3: Create and call a private function to load and fill
 		// all your map data
 		Fill_All_Map_Data(map_file);
+		Fill_All_Tiles(map_file);
 	}
 
 	// TODO 4: Create and call a private function to load a tileset
@@ -77,8 +78,64 @@ bool j1Map::Load(const char* file_name)
 
 	if(ret == true)
 	{
+		LOG("Successfully parsed map XML file: %s \n", file_name);
+
+		LOG("Version: %f \n", map.map_version);
+
+		char* _orientation = "No orientation";
+
+		if (map.orientation == 0) //Should put all the cases here, but i won't as it is not interesting
+		{
+			_orientation = "orthogonal";
+		}
+		LOG("Orientation: %s\n", _orientation);
+
+		char* _renderorder= "No render order";
+
+		if (map.renderorder == 0)
+		{
+			_renderorder = "right-down";
+		}
+		LOG("Render order: %s\n", _renderorder);
+
+	
+
+		LOG("Width: %i  Height: %i \n", map.width, map.height);
+
+		LOG("Tile_width: %i  Tile_height: %i \n", map.tilewidth, map.tileheight);
+
+		LOG("Next object id %i \n", map.nextobjectid);
+
 		// TODO 5: LOG all the data loaded
 		// iterate all tilesets and LOG everything
+
+		int counter = 0;
+		while (&tile_array->At(counter)->data != nullptr)
+		{
+			LOG("Tileset---\n");
+
+			LOG("Name: %s", tile_array->At(counter)->data.image.source);
+
+			LOG("Height: %i", tile_array->At(counter)->data.image.height);
+
+			LOG("Width: %i", tile_array->At(counter)->data.image.width);
+
+			LOG("Firstgit: %i \n", tile_array->At(counter)->data.firstid);
+
+			LOG("Margin: %i \n", tile_array->At(counter)->data.margin);
+
+			LOG("Name: %s \n", tile_array->At(counter)->data.name);
+
+			LOG("Spacing: %i \n", tile_array->At(counter)->data.spacing);
+
+			LOG("Tile height: %i \n", tile_array->At(counter)->data.tileheight);
+
+			LOG("Tile width: %i \n", tile_array->At(counter)->data.tilewidth);
+
+			LOG("Tile width: %i \n", tile_array->At(counter)->data.tilewidth);
+
+			counter++;
+		}
 	}
 
 	map_loaded = ret;
@@ -89,49 +146,74 @@ bool j1Map::Load(const char* file_name)
 void j1Map::Fill_All_Map_Data(const pugi::xml_node& node)
 {
 	//Version
-	map.map_version = node.attribute("version").as_float();
+	map.map_version = node.child("map").attribute("version").as_float();
 	//Orientation
-	if (node.attribute("orientation").as_string() == "orthogonal")
+	if (node.child("map").attribute("orientation").as_string() == "orthogonal")
 	{
 		map.orientation = orthogonal;
 	}
-	if (node.attribute("orientation").as_string() == "isometric")
+	if (node.child("map").attribute("orientation").as_string() == "isometric")
 	{
 		map.orientation = isometric;
 	}
-	if (node.attribute("orientation").as_string() == "staggered")
+	if (node.child("map").attribute("orientation").as_string() == "staggered")
 	{
 		map.orientation = staggered;
 	}
-	if (node.attribute("orientation").as_string() == "hexagonal")
+	if (node.child("map").attribute("orientation").as_string() == "hexagonal")
 	{
 		map.orientation = hexagonal;
 	}
 	//Render order
-	if (node.attribute("renderorder").as_string() == "right-down")
+	if (node.child("map").attribute("renderorder").as_string() == "right-down")
 	{
 		map.renderorder = right_down;
 	}
-	if (node.attribute("renderorder").as_string() == "right-up")
+	if (node.child("map").attribute("renderorder").as_string() == "right-up")
 	{
 		map.renderorder = right_up;
 	}
-	if (node.attribute("renderorder").as_string() == "left-up")
+	if (node.child("map").attribute("renderorder").as_string() == "left-up")
 	{
 		map.renderorder = left_up;
 	}
-	if (node.attribute("renderorder").as_string() == "left-dowm")
+	if (node.child("map").attribute("renderorder").as_string() == "left-dowm")
 	{
 		map.renderorder = left_down;
 	}
 	//Width
-	map.width = node.attribute("width").as_int();
+	map.width = node.child("map").attribute("width").as_int();
 	//Height
-	map.height = node.attribute("height").as_int();
+	map.height = node.child("map").attribute("height").as_int();
 	//Tile height
-	map.tileheight = node.attribute("tileheight").as_int();
+	map.tileheight = node.child("map").attribute("tileheight").as_int();
 	//Tile width
-	map.tilewidth = node.attribute("tilewidth").as_int();
+	map.tilewidth = node.child("map").attribute("tilewidth").as_int();
 	//Next object id
-	map.nextobjectid = node.attribute("nextobjectid").as_int();
+	map.nextobjectid = node.child("map").attribute("nextobjectid").as_int();
+}
+
+void j1Map::Fill_All_Tiles(const pugi::xml_node& node)
+{
+	pugi::xml_node tileset = node.child("map").child("tileset");
+	while (tileset != nullptr)
+	{
+		Tileset tileset_data;
+		tileset_data.firstid = tileset.attribute("firstgit").as_int();
+		tileset_data.margin = tileset.attribute("margin").as_int();
+		tileset_data.name = tileset.attribute("name").as_string();
+		tileset_data.spacing = tileset.attribute("spacing").as_int();
+		tileset_data.tileheight = tileset.attribute("tileheight").as_int();
+		tileset_data.tilewidth = tileset.attribute("tilewidth").as_int();
+		tileset_data.image.height = tileset.child("image").attribute("height").as_int();
+		tileset_data.image.width = tileset.child("image").attribute("width").as_int();
+		tileset_data.image.source = tileset.child("image").attribute("source").as_string();
+
+
+		tile_array->add(tileset_data);
+
+	
+
+		tileset = tileset.next_sibling("tileset");
+	}
 }
