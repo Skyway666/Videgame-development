@@ -80,7 +80,7 @@ bool j1Map::Load(const char* file_name)
 	{
 		LOG("Successfully parsed map XML file: %s \n", file_name);
 
-		LOG("Version: %f \n", map.map_version);
+		LOG("Version: %f", map.map_version);
 
 		char* _orientation = "No orientation";
 
@@ -88,7 +88,7 @@ bool j1Map::Load(const char* file_name)
 		{
 			_orientation = "orthogonal";
 		}
-		LOG("Orientation: %s\n", _orientation);
+		LOG("Orientation: %s", _orientation);
 
 		char* _renderorder= "No render order";
 
@@ -96,13 +96,15 @@ bool j1Map::Load(const char* file_name)
 		{
 			_renderorder = "right-down";
 		}
-		LOG("Render order: %s\n", _renderorder);
+		LOG("Render order: %s", _renderorder);
 
-	
+		LOG("Width: %i", map.width);
 
-		LOG("Width: %i  Height: %i \n", map.width, map.height);
+		LOG("Height: %i", map.height);
 
-		LOG("Tile_width: %i  Tile_height: %i \n", map.tilewidth, map.tileheight);
+		LOG("Tile_width: %i", map.tilewidth);
+
+		LOG("Tile_height: %i", map.tileheight);
 
 		LOG("Next object id %i \n", map.nextobjectid);
 
@@ -118,19 +120,17 @@ bool j1Map::Load(const char* file_name)
 
 			LOG("Height: %i", tile_array->At(counter)->data.image.height);
 
-			LOG("Width: %i", tile_array->At(counter)->data.image.width);
+			LOG("Width: %i\n", tile_array->At(counter)->data.image.width);
 
-			LOG("Firstgit: %i \n", tile_array->At(counter)->data.firstid);
+			LOG("Firstgit: %i", tile_array->At(counter)->data.firstid);
 
-			LOG("Margin: %i \n", tile_array->At(counter)->data.margin);
+			LOG("Margin: %i", tile_array->At(counter)->data.margin);
 
-			LOG("Name: %s \n", tile_array->At(counter)->data.name);
+			LOG("Name: %s", tile_array->At(counter)->data.name);
 
-			LOG("Spacing: %i \n", tile_array->At(counter)->data.spacing);
+			LOG("Spacing: %i", tile_array->At(counter)->data.spacing);
 
-			LOG("Tile height: %i \n", tile_array->At(counter)->data.tileheight);
-
-			LOG("Tile width: %i \n", tile_array->At(counter)->data.tilewidth);
+			LOG("Tile height: %i", tile_array->At(counter)->data.tileheight);
 
 			LOG("Tile width: %i \n", tile_array->At(counter)->data.tilewidth);
 
