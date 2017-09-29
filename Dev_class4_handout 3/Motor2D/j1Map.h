@@ -50,14 +50,19 @@ struct Map_node
 struct Tileset
 {
 	uint firstid;
-	const pugi::char_t* name;
+	const char* name;
 	uint tilewidth;
 	uint tileheight;
 	uint spacing;
 	uint margin;
 	image image;
+};
 
-	
+struct Layer
+{
+	const char* name;
+	int width;
+	int height;
 };
 // TODO 1: Create a struct needed to hold the information to Map node
 
@@ -88,6 +93,8 @@ public:
 
 	void Fill_All_Tiles(const pugi::xml_node& node);
 
+	void Fill_All_Layers(const pugi::xml_node& node);
+
 private:
 
 
@@ -95,6 +102,7 @@ public:
 
 	Map_node map;
     p2List<Tileset>* tile_array = new p2List<Tileset>;
+	p2List<Layer>* layer_array = new p2List<Layer>;
  	// TODO 1: Add your struct for map info as public for now
 
 private:

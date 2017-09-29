@@ -78,6 +78,7 @@ bool j1Map::Load(const char* file_name)
 		// all your map data
 		Fill_All_Map_Data(map_file);
 		Fill_All_Tiles(map_file);
+		Fill_All_Layers(map_file);
 	}
 
 	// TODO 4: Create and call a private function to load a tileset
@@ -122,7 +123,7 @@ bool j1Map::Load(const char* file_name)
 		int counter = 0;
 		while (&tile_array->At(counter)->data != nullptr)
 		{
-			LOG("Tileset---\n");
+			LOG("Tileset %i---\n", counter +1);
 
 			LOG("Name: %s", tile_array->At(counter)->data.image.source);
 
@@ -141,6 +142,20 @@ bool j1Map::Load(const char* file_name)
 			LOG("Tile height: %i", tile_array->At(counter)->data.tileheight);
 
 			LOG("Tile width: %i \n", tile_array->At(counter)->data.tilewidth);
+
+			counter++;
+		}
+
+		counter = 0;
+		while (&layer_array->At(counter)->data != nullptr)
+		{
+			LOG("Layer %i---\n", counter + 1);
+
+			LOG("Name: %s", layer_array->At(counter)->data.name);
+
+			LOG("Height: %i", layer_array->At(counter)->data.height);
+
+			LOG("Width: %i", layer_array->At(counter)->data.width);
 
 			counter++;
 		}
@@ -231,4 +246,21 @@ void j1Map::Fill_All_Tiles(const pugi::xml_node& node)
 	}
 
 	map.tilesets = counter;
+}
+
+void j1Map::Fill_All_Layers(const pugi::xml_node& node)
+{
+	int counter = 0;
+	pugi::xml_node layer = node.child("map").child("layer");
+	while (layer != nullptr)
+	{
+		Layer layer_data;
+
+		layer_data.height = layer.attribute("height").as_int();
+		layer_data.width = layer.attribute("width").as_int();
+		layer_data.name = layer.attribute("name").as_string();
+
+		layer_array->add(layer_data);
+		layer = layer.next_sibling("layer");
+	}
 }
