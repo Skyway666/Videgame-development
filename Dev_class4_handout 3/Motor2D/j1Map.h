@@ -61,6 +61,7 @@ struct Tileset
 struct Layer
 {
 	const char* name;
+	unsigned int* data;
 	int width;
 	int height;
 };

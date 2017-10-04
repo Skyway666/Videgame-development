@@ -51,8 +51,8 @@ bool j1Map::CleanUp()
 
 	// TODO 2: Make sure you clean up any memory allocated
 	// from tilesets / map
-	delete[] tile_array;
-
+	tile_array->clear();
+	layer_array->clear();
 	map_file.reset();
 
 	return true;
