@@ -48,8 +48,8 @@ void j1Map::Draw()
 
 			//Now they are in pixels
 
-			App->render->Blit(data.tilesets.At(0)->data->texture, x, y, &data.tilesets.At(0)->data->GetTileRect(id));
-		 
+			//App->render->Blit(data.tilesets.At(0)->data->texture, x, y, &data.tilesets.At(0)->data->GetTileRect(id));
+			App->render->Blit(data.tilesets.At(0)->data->texture, x, y, &Tile_Rect(id));
 		    counter++;
 		}
 		// TODO 9: Complete the draw function
@@ -73,8 +73,28 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	SDL_Rect rect;
 	rect.w = tile_width;
 	rect.h = tile_height;
-	rect.x = margin + ((rect.w + spacing) * (relative_id % num_tiles_width));
+	rect.x = margin + ((rect.w + spacing) * (relative_id -  num_tiles_width * (relative_id / num_tiles_width)));
 	rect.y = margin + ((rect.h + spacing) * (relative_id / num_tiles_width));
+	return rect;
+}
+
+SDL_Rect j1Map::Tile_Rect(int tileid)
+{
+
+	tileid = tileid - data.tilesets.At(0)->data->firstgid;
+
+	int row = tileid / data.tilesets.At(0)->data->num_tiles_width;
+
+	int column = tileid - row*data.tilesets.At(0)->data->num_tiles_width;
+
+	SDL_Rect rect;
+	rect.w = data.tilesets.At(0)->data->tile_width;
+	rect.h = data.tilesets.At(0)->data->tile_height;
+
+	rect.x = data.tilesets.At(0)->data->margin + (rect.w + data.tilesets.At(0)->data->spacing)*column;
+
+	rect.y = data.tilesets.At(0)->data->margin + (rect.h + data.tilesets.At(0)->data->spacing)*row;
+
 	return rect;
 }
 
@@ -359,22 +379,3 @@ void j1Map::convert_to_real_world(int* x, int* y)
 }
 
 
-SDL_Rect j1Map::Tile_Rect(int tileid)
-{
-	float row = tileid/data.tilesets.At(0)->data->num_tiles_width;
-
-	float column = tileid - row*(data.tilesets.At(0)->data->num_tiles_width);
-
-
-    float x = row *data.tilesets.At(0)->data->tile_width;
-
-	float y = column *data.tilesets.At(0)->data->tile_height;
-
-	SDL_Rect ret;
-	ret.h = data.tilesets.At(0)->data->tile_height;
-	ret.w = data.tilesets.At(0)->data->tile_width;
-	ret.x = x;
-	ret.y = y;
-
-	return ret;
-}
