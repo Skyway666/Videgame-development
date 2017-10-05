@@ -48,7 +48,7 @@ void j1Map::Draw()
 
 			//Now they are in pixels
 
-			App->render->Blit(data.tilesets.At(0)->data->texture, x, y, &Tile_Rect(id));
+			App->render->Blit(data.tilesets.At(0)->data->texture, x, y, &data.tilesets.At(0)->data->GetTileRect(id));
 		 
 		    counter++;
 		}
@@ -353,10 +353,12 @@ void j1Map::Get(int* x, int* y)
 
 void j1Map::convert_to_real_world(int* x, int* y)
 {
-	*x = *x * data.tilesets.At(0)->data->num_tiles_width;
+	*x = *x * data.tilesets.At(0)->data->tile_height;
 
-	*y = *y * data.tilesets.At(0)->data->num_tiles_height;
+	*y = *y * data.tilesets.At(0)->data->tile_width;
 }
+
+
 SDL_Rect j1Map::Tile_Rect(int tileid)
 {
 	float row = tileid/data.tilesets.At(0)->data->num_tiles_width;

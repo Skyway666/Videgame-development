@@ -1,6 +1,6 @@
 ﻿  j1Map.cpp
-c:\users\lucasgm\documents\github\videgame-development\dev_class5_handout\motor2d\j1map.cpp(362): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-c:\users\lucasgm\documents\github\videgame-development\dev_class5_handout\motor2d\j1map.cpp(374): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\lucasgm\documents\github\videgame-development\dev_class5_handout\motor2d\j1map.cpp(375): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\lucasgm\documents\github\videgame-development\dev_class5_handout\motor2d\j1map.cpp(364): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\lucasgm\documents\github\videgame-development\dev_class5_handout\motor2d\j1map.cpp(376): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\videgame-development\dev_class5_handout\motor2d\j1map.cpp(377): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Videgame-development\Dev_class5_handout\Debug\Motor 2D.exe
-  Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Videgame-development\Dev_class5_handout\Debug\Motor 2D.pdb (Partial PDB)
+  Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Videgame-development\Dev_class5_handout\Debug\Motor 2D.pdb (Full PDB)
