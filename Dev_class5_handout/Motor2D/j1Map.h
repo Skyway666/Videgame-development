@@ -36,7 +36,7 @@ struct TileSet
 
 struct MapLayer
 {
-	const char* name;
+	p2SString name;
 	int width;
 	int height;
 	uint* data = nullptr;
@@ -92,7 +92,11 @@ public:
 	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
 
-	inline uint Get(int* x, int* y); //la x es el numero, la y cuantos elementos hay en una fila
+	void Get(int* x, int* y); //la x es el numero, la y cuantos elementos hay en una fila
+
+	SDL_Rect Tile_Rect(int tileid);
+
+	void convert_to_real_world(int*, int*);
 
 private:
 

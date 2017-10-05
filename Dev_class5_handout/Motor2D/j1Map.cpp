@@ -32,18 +32,28 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
-	int counter;
-	while (counter < data.layer_array.At(0)->data->height*data.layer_array.At(0)->data->width)
-	{
-		data.layer_array.At(counter)->data->data[counter]; //devuelve el tipo de tileset
-		int x = counter;
-		int y = data.layer_array.At(0)->data->width;
+	int counter = 0;
+	if (data.layer_array.At(0) != nullptr)
+	{ 
+		while (counter < data.layer_array.At(0)->data->height*data.layer_array.At(0)->data->width)
+		{
+			int id = data.layer_array.At(0)->data->data[counter]; //devuelve el tipo de tileset
+			int x = counter; 
+			int y = data.layer_array.At(0)->data->width;
+			Get(&x, &y); 
 
-		Get(&x, &y); // en principio ahora deberia estar guapísimo esto
+			//Now, x and y are the coordinates of the tileset
+			
+			convert_to_real_world(&x, &y);
 
-	}
+			//Now they are in pixels
+
+			App->render->Blit(data.tilesets.At(0)->data->texture, x, y, &Tile_Rect(id));
+		 
+		    counter++;
+		}
 		// TODO 9: Complete the draw function
-
+	}
 }
 
 
@@ -135,7 +145,7 @@ bool j1Map::Load(const char* file_name)
 
 	// TODO 4: Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
-
+	LoadLayer(map_file);
 
 	if(ret == true)
 	{
@@ -157,7 +167,7 @@ bool j1Map::Load(const char* file_name)
 		// TODO 4: Add info here about your loaded layers
 		// Adapt this vcode with your own variables
 		
-		p2List_item<MapLayer*>* item_layer = data.layer_array.start;
+		/*p2List_item<MapLayer*>* item_layer = data.layer_array.start;
 		while(item_layer != NULL)
 		{
 			MapLayer* l = item_layer->data;
@@ -165,7 +175,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer = item_layer->next;
-		}
+		}*/
 	}
 
 	map_loaded = ret;
@@ -306,35 +316,63 @@ bool j1Map::LoadLayer(pugi::xml_node& node)
 	pugi::xml_node layer = node.child("map").child("layer");
 	while (layer != nullptr)
 	{
-		MapLayer layer_data;
+	    MapLayer* layer_data = new MapLayer;
 
-		layer_data.height = layer.attribute("height").as_int();
-		layer_data.width = layer.attribute("width").as_int();
-		layer_data.name = layer.attribute("name").as_string();
+		layer_data->height = layer.attribute("height").as_int();
+		layer_data->width = layer.attribute("width").as_int();
+		layer_data->name = layer.attribute("name").as_string();
 
-		memset(layer_data.data, 0, sizeof(uint)*(layer_data.height*layer_data.width));
+		layer_data->data = new uint[layer_data->height*layer_data->width];
+
+		memset(layer_data->data, 0, sizeof(uint)*(layer_data->height*layer_data->width));
 
 		int i = 0;
 		pugi::xml_node tile_ = layer.child("data").child("tile");
 		while (tile_ != nullptr)
 		{
-			layer_data.data[i] = tile_.attribute("git").as_uint();
+			layer_data->data[i] = tile_.attribute("gid").as_uint();
 			tile_ = tile_.next_sibling("tile");
 			i++;
 		}
 
-		data.layer_array.add(&layer_data);
+		data.layer_array.add(layer_data);
 		layer = layer.next_sibling("layer");
 	}
 
 	return true;
 }
 
-inline uint j1Map::Get(int* x, int* y)
+void j1Map::Get(int* x, int* y)
 {
 	int row = *x / *y;
 	int column = *x - row*(*y);
 
-	*x = row;
-	*y = column;
+	*x = column;
+	*y = row;
+}
+
+void j1Map::convert_to_real_world(int* x, int* y)
+{
+	*x = *x * data.tilesets.At(0)->data->num_tiles_width;
+
+	*y = *y * data.tilesets.At(0)->data->num_tiles_height;
+}
+SDL_Rect j1Map::Tile_Rect(int tileid)
+{
+	float row = tileid/data.tilesets.At(0)->data->num_tiles_width;
+
+	float column = tileid - row*(data.tilesets.At(0)->data->num_tiles_width);
+
+
+    float x = row *data.tilesets.At(0)->data->tile_width;
+
+	float y = column *data.tilesets.At(0)->data->tile_height;
+
+	SDL_Rect ret;
+	ret.h = data.tilesets.At(0)->data->tile_height;
+	ret.w = data.tilesets.At(0)->data->tile_width;
+	ret.x = x;
+	ret.y = y;
+
+	return ret;
 }
