@@ -74,7 +74,7 @@ bool j1Map::CleanUp()
 		item = item->next;
 	}
 	data.tilesets.clear();
-	data.layer_array->clear();
+	data.layer_array.clear();
 	// TODO 2: clean up all layer data
 	// Remove all layers
 
@@ -292,6 +292,31 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 }
 
 // TODO 3: Create the definition for a function that loads a single layer
-//bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
-//{
-//}
+bool j1Map::LoadLayer(pugi::xml_node& node)
+{
+	pugi::xml_node layer = node.child("map").child("layer");
+	while (layer != nullptr)
+	{
+		MapLayer layer_data;
+
+		layer_data.height = layer.attribute("height").as_int();
+		layer_data.width = layer.attribute("width").as_int();
+		layer_data.name = layer.attribute("name").as_string();
+
+		memset(layer_data.data, 0, sizeof(uint)*(layer_data.height*layer_data.width));
+
+		int i = 0;
+		pugi::xml_node tile_ = layer.child("data").child("tile");
+		while (tile_ != nullptr)
+		{
+			layer_data.data[i] = tile_.attribute("git").as_uint();
+			tile_ = tile_.next_sibling("tile");
+			i++;
+		}
+
+		data.layer_array.add(&layer_data);
+		layer = layer.next_sibling("layer");
+	}
+
+	return true;
+}

@@ -39,6 +39,11 @@ struct MapLayer
 	const char* name;
 	int width;
 	int height;
+	uint* data = nullptr;
+
+
+	// la size me la paso por los huevos y tal.
+
 };
 
 enum MapTypes
@@ -58,7 +63,7 @@ struct MapData
 	SDL_Color			background_color;
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
-	p2List<MapLayer>* layer_array = new p2List<MapLayer>;
+	p2List<MapLayer*> layer_array;
 	// TODO 2: Add a list/array of layers to the map!
 };
 
@@ -93,7 +98,7 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	// TODO 3: Create a method that loads a single layer
-	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	bool LoadLayer(pugi::xml_node& node);
 
 public:
 

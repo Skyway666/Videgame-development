@@ -250,17 +250,6 @@ void j1Map::Fill_All_Tiles(const pugi::xml_node& node)
 
 void j1Map::Fill_All_Layers(const pugi::xml_node& node)
 {
-	int counter = 0;
-	pugi::xml_node layer = node.child("map").child("layer");
-	while (layer != nullptr)
-	{
-		Layer layer_data;
 
-		layer_data.height = layer.attribute("height").as_int();
-		layer_data.width = layer.attribute("width").as_int();
-		layer_data.name = layer.attribute("name").as_string();
 
-		layer_array->add(layer_data);
-		layer = layer.next_sibling("layer");
-	}
 }
