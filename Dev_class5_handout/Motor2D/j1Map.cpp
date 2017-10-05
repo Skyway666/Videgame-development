@@ -32,7 +32,16 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
+	int counter;
+	while (counter < data.layer_array.At(0)->data->height*data.layer_array.At(0)->data->width)
+	{
+		data.layer_array.At(counter)->data->data[counter]; //devuelve el tipo de tileset
+		int x = counter;
+		int y = data.layer_array.At(0)->data->width;
 
+		Get(&x, &y); // en principio ahora deberia estar guapísimo esto
+
+	}
 		// TODO 9: Complete the draw function
 
 }
@@ -147,8 +156,8 @@ bool j1Map::Load(const char* file_name)
 
 		// TODO 4: Add info here about your loaded layers
 		// Adapt this vcode with your own variables
-		/*
-		p2List_item<MapLayer*>* item_layer = data.layers.start;
+		
+		p2List_item<MapLayer*>* item_layer = data.layer_array.start;
 		while(item_layer != NULL)
 		{
 			MapLayer* l = item_layer->data;
@@ -156,7 +165,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer = item_layer->next;
-		}*/
+		}
 	}
 
 	map_loaded = ret;
@@ -319,4 +328,13 @@ bool j1Map::LoadLayer(pugi::xml_node& node)
 	}
 
 	return true;
+}
+
+inline uint j1Map::Get(int* x, int* y)
+{
+	int row = *x / *y;
+	int column = *x - row*(*y);
+
+	*x = row;
+	*y = column;
 }

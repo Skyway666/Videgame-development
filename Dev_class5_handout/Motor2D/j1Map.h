@@ -92,6 +92,8 @@ public:
 	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
 
+	inline uint Get(int* x, int* y); //la x es el numero, la y cuantos elementos hay en una fila
+
 private:
 
 	bool LoadMap();
