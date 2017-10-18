@@ -32,61 +32,68 @@ void j1Map::ResetBFS()
 	frontier.Clear();
 	visited.clear();
 	frontier.Push(iPoint(19, 4));
-	visited.add(iPoint(19, 4));
+	Node4Path point;
+	point.tile_coordinates = iPoint(19, 4);
+	point.came_from = nullptr;
+	visited.add(point);
 }
 
 void j1Map::PropagateBFS()
 {
 	// TODO 1: If frontier queue contains elements
 	// pop the last one and calculate its 4 neighbors
-	iPoint left;
-	iPoint right;
-	iPoint top;
-	iPoint bottom;
+	Node4Path left;
+	Node4Path right;
+	Node4Path top;
+	Node4Path bottom;
+	Node4Path last;
 
 	if (frontier.start != nullptr)
 	{
-		iPoint last;
-		last = frontier.GetLast()->data;
-		frontier.Pop(last);
+		last.tile_coordinates = frontier.GetLast()->data;
+		frontier.Pop(last.tile_coordinates);
 		
-		left.x = last.x - 1;
-		left.y = last.y;
+		left.tile_coordinates.x = last.tile_coordinates.x - 1;
+		left.tile_coordinates.y = last.tile_coordinates.y;
+		left.came_from = &last;
 
-		right.x = last.x + 1;
-		right.y = last.y;
+		right.tile_coordinates.x = last.tile_coordinates.x + 1;
+		right.tile_coordinates.y = last.tile_coordinates.y;
+		right.came_from = &last;
 
-		top.x = last.x;
-		top.y = last.y - 1;
+		top.tile_coordinates.x = last.tile_coordinates.x;
+		top.tile_coordinates.y = last.tile_coordinates.y - 1;
+		top.came_from = &last;
 
-		bottom.x = last.x;
-		bottom.y = last.y + 1; 
+		bottom.tile_coordinates.x = last.tile_coordinates.x;
+		bottom.tile_coordinates.y = last.tile_coordinates.y + 1; 
+		bottom.came_from = &last;
 	}
 
 	
 	// TODO 2: For each neighbor, if not visited, add it
 	// to the frontier queue and visited list
-	if (visited.find(left) == -1 && IsWalkable(left.x,left.y))
+	if (visited.find(left) == -1 && IsWalkable(left.tile_coordinates.x,left.tile_coordinates.y))
 	{
-		frontier.Push(left);
+		frontier.Push(left.tile_coordinates);
 		visited.add(left);
 	}
 
-	if (visited.find(right) == -1 && IsWalkable(right.x, right.y))
+	if (visited.find(right) == -1 && IsWalkable(right.tile_coordinates.x, right.tile_coordinates.y))
 	{
-		frontier.Push(right);
+		frontier.Push(right.tile_coordinates);
 		visited.add(right);
 	}
 
-	if (visited.find(top) == -1 && IsWalkable(top.x, top.y))
+	if (visited.find(top) == -1 && IsWalkable(top.tile_coordinates.x, top.tile_coordinates.y))
 	{
-		frontier.Push(top);
+		frontier.Push(top.tile_coordinates);
 		visited.add(top);
 	}
 
-	if (visited.find(bottom) == -1 && IsWalkable(bottom.x, bottom.y))
+	if (visited.find(bottom) == -1 && IsWalkable(bottom.tile_coordinates.x, bottom.tile_coordinates.y))
 	{
-		frontier.Push(bottom);
+		frontier.Push(bottom.tile_coordinates);
 		visited.add(bottom);
 	}
 }
@@ -96,11 +103,11 @@ void j1Map::DrawBFS()
 	iPoint point;
 
 	// Draw visited
-	p2List_item<iPoint>* item = visited.start;
+	p2List_item<Node4Path>* item = visited.start;
 
 	while(item)
 	{
-		point = item->data;
+		point = item->data.tile_coordinates;
 		TileSet* tileset = GetTilesetFromTileId(26);
 
 		SDL_Rect r = tileset->GetTileRect(26);

@@ -34,7 +34,6 @@ struct Properties
 
 	p2List<Property*>	list;
 };
-
 // ----------------------------------------------------
 struct MapLayer
 {
@@ -98,6 +97,15 @@ struct MapData
 	p2List<MapLayer*>	layers;
 };
 
+struct Node4Path
+{
+	iPoint tile_coordinates;
+	Node4Path* came_from;
+	bool operator ==(const Node4Path& v) const
+	{
+		return tile_coordinates == v.tile_coordinates;
+	}
+};
 // ----------------------------------------------------
 class j1Map : public j1Module
 {
@@ -151,7 +159,7 @@ private:
 
 	/// BFS
 	p2Queue<iPoint>		frontier;
-	p2List<iPoint>		visited;
+	p2List<Node4Path>		visited;
 };
 
 #endif // __j1MAP_H__
