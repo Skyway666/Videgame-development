@@ -32,12 +32,13 @@ void j1Map::ResetBFS()
 {
 	frontier.Clear();
 	visited.clear();
-	frontier.Push(iPoint(19, 4));
+	
 
 	Node4Path point;
 	point.tile_coordinates = iPoint(19, 4);
 	point.came_from = nullptr;
 	visited.add(point);
+	frontier.Push(point);
 }
 
 void j1Map::PropagateBFS()
@@ -52,8 +53,8 @@ void j1Map::PropagateBFS()
 
 	if (frontier.start != nullptr)
 	{
-		last.tile_coordinates = frontier.GetLast()->data;
-		frontier.Pop(last.tile_coordinates);
+		last = frontier.GetLast()->data;
+		frontier.Pop(last);
 
 		left.tile_coordinates.x = last.tile_coordinates.x - 1;
 		left.tile_coordinates.y = last.tile_coordinates.y;
@@ -78,25 +79,25 @@ void j1Map::PropagateBFS()
 	// to the frontier queue and visited list
 	if (visited.find(left) == -1 && IsWalkable(left.tile_coordinates.x,left.tile_coordinates.y))
 	{
-		frontier.Push(left.tile_coordinates);
+		frontier.Push(left);
 		visited.add(left);
 	}
 
 	if (visited.find(right) == -1 && IsWalkable(right.tile_coordinates.x, right.tile_coordinates.y))
 	{
-		frontier.Push(right.tile_coordinates);
+		frontier.Push(right);
 		visited.add(right);
 	}
 
 	if (visited.find(top) == -1 && IsWalkable(top.tile_coordinates.x, top.tile_coordinates.y))
 	{
-		frontier.Push(top.tile_coordinates);
+		frontier.Push(top);
 		visited.add(top);
 	}
 
 	if (visited.find(bottom) == -1 && IsWalkable(bottom.tile_coordinates.x, bottom.tile_coordinates.y))
 	{
-		frontier.Push(bottom.tile_coordinates);
+		frontier.Push(bottom);
 		visited.add(bottom);
 	}		
 	
@@ -109,12 +110,9 @@ void j1Map::PropagateBFS()
 	//}
 
 }
-
+//
 //void j1Map::CreatePath(Node4Path* origin) 
 //{
-//
-//	Node4Path*iterator = &visited.At(visited.find(*origin))->data;
-//
 //	while (origin != nullptr)
 //	{
 //		path.Push(origin->tile_coordinates);
@@ -145,13 +143,28 @@ void j1Map::DrawBFS()
 	// Draw frontier
 	for (uint i = 0; i < frontier.Count(); ++i)
 	{
-		point = *(frontier.Peek(i));
+		point = frontier.Peek(i)->tile_coordinates;
 		TileSet* tileset = GetTilesetFromTileId(25);
 
 		SDL_Rect r = tileset->GetTileRect(25);
 		iPoint pos = MapToWorld(point.x, point.y);
 
 		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+	}
+
+	//Draw path
+	if (path.start != nullptr)
+	{
+		for (int i = 0; i < path.Count(); i++)
+		{
+			point = *(path.Peek(i));
+			TileSet* tileset = GetTilesetFromTileId(25);
+
+			SDL_Rect r = tileset->GetTileRect(25);
+			iPoint pos = MapToWorld(point.x, point.y);
+
+			App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+		}
 	}
 
 }

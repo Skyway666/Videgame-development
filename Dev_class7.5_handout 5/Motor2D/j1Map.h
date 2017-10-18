@@ -161,7 +161,7 @@ private:
 	bool				map_loaded;
 
 	/// BFS
-	p2Queue<iPoint>		frontier;
+	p2Queue<Node4Path>		frontier;
 	p2List<Node4Path>	visited;	
 
 	p2Queue<iPoint>		path;
