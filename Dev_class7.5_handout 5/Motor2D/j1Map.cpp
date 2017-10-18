@@ -112,12 +112,16 @@ void j1Map::PropagateBFS()
 
 //void j1Map::CreatePath(Node4Path* origin) 
 //{
+//
+//	Node4Path*iterator = &visited.At(visited.find(*origin))->data;
+//
 //	while (origin != nullptr)
 //	{
 //		path.Push(origin->tile_coordinates);
 //		origin = origin->came_from;
 //	}
 //}
+
 void j1Map::DrawBFS()
 {
 	iPoint point;
