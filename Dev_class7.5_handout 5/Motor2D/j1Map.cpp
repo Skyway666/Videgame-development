@@ -22,6 +22,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
+	destination = iPoint(19, 9);
 	ResetBFS();
 
 	return ret;
@@ -32,6 +33,7 @@ void j1Map::ResetBFS()
 	frontier.Clear();
 	visited.clear();
 	frontier.Push(iPoint(19, 4));
+
 	Node4Path point;
 	point.tile_coordinates = iPoint(19, 4);
 	point.came_from = nullptr;
@@ -52,7 +54,7 @@ void j1Map::PropagateBFS()
 	{
 		last.tile_coordinates = frontier.GetLast()->data;
 		frontier.Pop(last.tile_coordinates);
-		
+
 		left.tile_coordinates.x = last.tile_coordinates.x - 1;
 		left.tile_coordinates.y = last.tile_coordinates.y;
 		left.came_from = &last;
@@ -70,7 +72,8 @@ void j1Map::PropagateBFS()
 		bottom.came_from = &last;
 	}
 
-	
+
+
 	// TODO 2: For each neighbor, if not visited, add it
 	// to the frontier queue and visited list
 	if (visited.find(left) == -1 && IsWalkable(left.tile_coordinates.x,left.tile_coordinates.y))
@@ -95,9 +98,26 @@ void j1Map::PropagateBFS()
 	{
 		frontier.Push(bottom.tile_coordinates);
 		visited.add(bottom);
-	}
+	}		
+	
+	
+	//TODO 4: If the point is found, fill the path queue. The last element will be the starting point for the path!
+	//if (last.tile_coordinates == destination)
+	//{
+	//	CreatePath(&last);
+	//	ResetBFS();
+	//}
+
 }
 
+//void j1Map::CreatePath(Node4Path* origin) 
+//{
+//	while (origin != nullptr)
+//	{
+//		path.Push(origin->tile_coordinates);
+//		origin = origin->came_from;
+//	}
+//}
 void j1Map::DrawBFS()
 {
 	iPoint point;
