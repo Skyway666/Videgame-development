@@ -1,2 +1,6 @@
-﻿  Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Videgame-development\Dev_class7.8_handout 6\Debug\Dev Class7.8 Handout.exe
-  Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Videgame-development\Dev_class7.8_handout 6\Debug\Dev Class7.8 Handout.pdb (Partial PDB)
+﻿  j1Map.cpp
+c:\users\lucasgm\documents\github\videgame-development\dev_class7.8_handout 6\motor2d\j1map.cpp(86): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lucasgm\documents\github\videgame-development\dev_class7.8_handout 6\motor2d\j1map.cpp(262): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\lucasgm\documents\github\videgame-development\dev_class7.8_handout 6\motor2d\j1map.cpp(263): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Videgame-development\Dev_class7.8_handout 6\Debug\Dev Class7.8 Handout.exe
+  Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Videgame-development\Dev_class7.8_handout 6\Debug\Dev Class7.8 Handout.pdb (Partial PDB)
