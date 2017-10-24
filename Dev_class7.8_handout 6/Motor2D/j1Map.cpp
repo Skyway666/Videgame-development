@@ -65,13 +65,12 @@ void j1Map::Path(int x, int y)
 void j1Map::PropagateAx(iPoint goal)
 {
 	iPoint curr;
-	if (frontier.Pop(curr))
+	if (!finish_ax && frontier.Pop(curr))
 	{
 		if (curr == goal)
-			finish_ax = true;
+		finish_ax = true;
 
-		if(!finish_ax)
-		{ 
+	
 			iPoint neighbors[4];
 			neighbors[0].create(curr.x + 1, curr.y + 0);
 			neighbors[1].create(curr.x + 0, curr.y + 1);
@@ -81,7 +80,7 @@ void j1Map::PropagateAx(iPoint goal)
 			{
 				if (MovementCost(neighbors[i].x, neighbors[i].y) != -1)
 				{
-					int new_cost = goal.DistanceManhattan(neighbors[i]) + cost_so_far[curr.x][curr.y];
+					int new_cost = neighbors[i].DistanceManhattan(goal);
 
 					if (new_cost < cost_so_far[neighbors[i].x][neighbors[i].y] || cost_so_far[neighbors[i].x][neighbors[i].y] == 0)
 					{
@@ -92,7 +91,6 @@ void j1Map::PropagateAx(iPoint goal)
 					}
 				}
 			}
-		}
 	}
 }
 
