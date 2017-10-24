@@ -38,6 +38,7 @@ void j1Map::ResetPath()
 	frontier.Clear();
 	visited.clear();
 	breadcrumbs.clear();
+	finish_ax = false;
 	frontier.Push(iPoint(19, 4), 0);
 	visited.add(iPoint(19, 4));
 	breadcrumbs.add(iPoint(19, 4));
@@ -58,6 +59,39 @@ void j1Map::Path(int x, int y)
 		for (int i = visited.find(goal); i != 0; i = visited.find(breadcrumbs.At(i)->data))
 		{
 			path.PushBack(breadcrumbs.At(i)->data);
+		}
+	}
+}
+void j1Map::PropagateAx(iPoint goal)
+{
+	iPoint curr;
+	if (frontier.Pop(curr))
+	{
+		if (curr == goal)
+			finish_ax = true;
+
+		if(!finish_ax)
+		{ 
+			iPoint neighbors[4];
+			neighbors[0].create(curr.x + 1, curr.y + 0);
+			neighbors[1].create(curr.x + 0, curr.y + 1);
+			neighbors[2].create(curr.x - 1, curr.y + 0);
+			neighbors[3].create(curr.x + 0, curr.y - 1);
+			for (uint i = 0; i < 4; ++i)
+			{
+				if (MovementCost(neighbors[i].x, neighbors[i].y) != -1)
+				{
+					int new_cost = goal.DistanceManhattan(neighbors[i]) + cost_so_far[curr.x][curr.y];
+
+					if (new_cost < cost_so_far[neighbors[i].x][neighbors[i].y] || cost_so_far[neighbors[i].x][neighbors[i].y] == 0)
+					{
+						frontier.Push(neighbors[i], new_cost);
+						visited.add(neighbors[i]);
+						cost_so_far[neighbors[i].x][neighbors[i].y] = new_cost;
+						breadcrumbs.add(curr);
+					}
+				}
+			}
 		}
 	}
 }

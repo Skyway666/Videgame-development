@@ -136,6 +136,8 @@ public:
 	// Propagation style
 	void PropagateBFS();
 	void PropagateDijkstra();
+	void PropagateAx(iPoint goal);
+	bool finish_ax = false;
 
 private:
 
