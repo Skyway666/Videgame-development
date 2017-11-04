@@ -212,9 +212,9 @@ void j1App::FinishUpdate()
 	// TODO3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
 	real_delay = tester.ReadMs();
 	
-	diferential_time = 
+//	diferential_time = 
 
-	LOG("Expected delay: %f Real delay: %f", expected_delay, real_delay);
+	LOG("Expected delay: %f Real delay: %f", expected_delay, expected_delay);
 }
 
 // Call modules before each loop iteration

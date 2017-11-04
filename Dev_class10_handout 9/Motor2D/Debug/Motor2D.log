@@ -1,20 +1,9 @@
 ﻿  j1App.cpp
-c:\users\lucasgm\desktop\dev_class10_handout\motor2d\j1app.cpp(208): warning C4244: '=': conversion from 'uint32' to 'float', possible loss of data
-c:\users\lucasgm\desktop\dev_class10_handout\motor2d\j1app.cpp(211): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
-c:\users\lucasgm\desktop\dev_class10_handout\motor2d\j1app.cpp(213): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\lucasgm\desktop\dev_class10_handout\motor2d\j1app.cpp(202): warning C4477: 'sprintf_s' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 5 has type 'uint64'
-  c:\users\lucasgm\desktop\dev_class10_handout\motor2d\j1app.cpp(202): note: consider using '%llu' in the format string
-  c:\users\lucasgm\desktop\dev_class10_handout\motor2d\j1app.cpp(202): note: consider using '%I64u' in the format string
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  j1Window.cpp
-  j1Textures.cpp
-  j1Scene.cpp
-  j1Render.cpp
-  j1Pathfinding.cpp
-  j1Map.cpp
-  j1Main.cpp
-  j1Input.cpp
-  j1Audio.cpp
-  Motor2D.vcxproj -> C:\Users\lucasgm\Desktop\Dev_class10_handout\Debug\Development - Class 10.exe
-  Motor2D.vcxproj -> C:\Users\lucasgm\Desktop\Dev_class10_handout\Debug\Development - Class 10.pdb (Partial PDB)
+c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(208): warning C4244: '=': conversión de 'uint32' a 'float'; posible pérdida de datos
+c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(211): warning C4244: 'argumento': conversión de 'float' a 'Uint32'; posible pérdida de datos
+c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(213): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(202): warning C4477: 'sprintf_s' : la cadena de formato '%lu' requiere un argumento de tipo 'unsigned long', pero el argumento variádico 5 tiene el tipo 'uint64'
+  c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(202): note: considere el uso de ' %llu' en la cadena de formato
+  c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(202): note: considere el uso de ' %I64u' en la cadena de formato
+  Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Videgame-development\Dev_class10_handout 9\Debug\Development - Class 10.exe
+  Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Videgame-development\Dev_class10_handout 9\Debug\Development - Class 10.pdb (Partial PDB)
