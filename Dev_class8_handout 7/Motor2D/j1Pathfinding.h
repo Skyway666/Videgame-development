@@ -76,7 +76,7 @@ struct PathNode
 	int CalculateF(const iPoint& destination);
 
 	bool operator==(const PathNode& node) const;
-
+	void PathNode::operator=(const PathNode& node);
 	// -----------
 	int g;
 	int h;

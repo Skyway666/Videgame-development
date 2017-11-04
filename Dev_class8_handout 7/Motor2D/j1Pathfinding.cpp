@@ -167,6 +167,14 @@ bool PathNode::operator==(const PathNode& node)const
 	return pos == node.pos;
 }
 
+void PathNode::operator=(const PathNode& node)
+{
+	h = node.h;
+	g = node.g;
+	pos = node.pos;
+	parent = node.parent;
+
+}
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
@@ -189,7 +197,9 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	while (open.list.start != nullptr)
 	{
 		// TODO 3: Move the lowest score cell from open list to the closed list
-		copied = open.GetNodeLowestScore()->data;
+
+		p2List_item<PathNode>* ret = open.GetNodeLowestScore();
+        copied = ret->data;
 		close.list.add(copied);
 		open.list.del(open.list.At(open.list.find(copied)));
 		// TODO 4: If we just added the destination, we are done!
