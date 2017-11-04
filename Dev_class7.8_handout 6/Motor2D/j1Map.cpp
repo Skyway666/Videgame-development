@@ -78,7 +78,7 @@ void j1Map::PropagateAx(iPoint goal)
 			neighbors[3].create(curr.x + 0, curr.y - 1);
 			for (uint i = 0; i < 4; ++i)
 			{
-				if (MovementCost(neighbors[i].x, neighbors[i].y) != -1)
+				if (MovementCost(neighbors[i].x, neighbors[i].y) > 0)
 				{
 					int new_cost = neighbors[i].DistanceManhattan(goal);
 

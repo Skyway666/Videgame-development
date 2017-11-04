@@ -214,7 +214,7 @@ void j1App::FinishUpdate()
 	
 //	diferential_time = 
 
-	LOG("Expected delay: %f Real delay: %f", expected_delay, expected_delay);
+	LOG("Expected delay: %f Real delay: %f", expected_delay, real_delay);
 }
 
 // Call modules before each loop iteration
