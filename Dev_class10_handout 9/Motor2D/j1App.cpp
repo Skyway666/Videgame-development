@@ -170,8 +170,9 @@ void j1App::PrepareUpdate()
 {
 	frame_count++;
 	last_sec_frame_count++;
-
 	// TODO 4: Calculate the dt: differential time since last frame
+
+	//diferential_time = (1/frame_limit) /frame_time.ReadSec();
 	frame_time.Start();
 }
 
@@ -195,7 +196,7 @@ void j1App::FinishUpdate()
 
 	float avg_fps = float(frame_count) / startup_time.ReadSec();
 	float seconds_since_startup = startup_time.ReadSec();
-	uint32 last_frame_ms = frame_time.Read();
+	last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
@@ -212,7 +213,7 @@ void j1App::FinishUpdate()
 	// TODO3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
 	real_delay = tester.ReadMs();
 	
-//	diferential_time = 
+	
 
 	LOG("Expected delay: %f Real delay: %f", expected_delay, real_delay);
 }
@@ -258,7 +259,7 @@ bool j1App::DoUpdate()
 		// TODO 5: send dt as an argument to all updates
 		// you will need to update module parent class
 		// and all modules that use update
-		ret = item->data->Update();
+		ret = item->data->Update(diferential_time);
 	}
 
 	return ret;

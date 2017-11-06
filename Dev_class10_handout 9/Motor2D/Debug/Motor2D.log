@@ -1,10 +1,9 @@
 ﻿  j1App.cpp
-c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(208): warning C4244: '=': conversión de 'uint32' a 'float'; posible pérdida de datos
-c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(211): warning C4244: 'argumento': conversión de 'float' a 'Uint32'; posible pérdida de datos
-c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(213): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(202): warning C4477: 'sprintf_s' : la cadena de formato '%lu' requiere un argumento de tipo 'unsigned long', pero el argumento variádico 5 tiene el tipo 'uint64'
-  c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(202): note: considere el uso de ' %llu' en la cadena de formato
-  c:\users\gaming\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(202): note: considere el uso de ' %I64u' en la cadena de formato
-  LINK : no se encontró C:\Users\Gaming\Documents\GitHub\Videgame-development\Dev_class10_handout 9\Debug\Development - Class 10.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
-  Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Videgame-development\Dev_class10_handout 9\Debug\Development - Class 10.exe
-  Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Videgame-development\Dev_class10_handout 9\Debug\Development - Class 10.pdb (Partial PDB)
+c:\users\lucasgm\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(209): warning C4244: '=': conversion from 'uint32' to 'float', possible loss of data
+c:\users\lucasgm\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(212): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
+c:\users\lucasgm\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(214): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\lucasgm\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(203): warning C4477: 'sprintf_s' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 5 has type 'uint64'
+  c:\users\lucasgm\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(203): note: consider using '%llu' in the format string
+  c:\users\lucasgm\documents\github\videgame-development\dev_class10_handout 9\motor2d\j1app.cpp(203): note: consider using '%I64u' in the format string
+  Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Videgame-development\Dev_class10_handout 9\Debug\Development - Class 10.exe
+  Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Videgame-development\Dev_class10_handout 9\Debug\Development - Class 10.pdb (Partial PDB)

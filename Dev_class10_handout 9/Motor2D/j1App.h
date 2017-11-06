@@ -116,6 +116,7 @@ private:
 	float diferential_time;
 
 	uint32 frame_limit;
+	uint32 last_frame_ms = 1;
 };
 
 extern j1App* App; 
